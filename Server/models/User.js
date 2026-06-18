@@ -40,15 +40,13 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", async function encryptPassword(next) {
+userSchema.pre("save", async function encryptPassword() {
   if (!this.isModified("password")) {
-    next();
     return;
   }
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
 });
 
 userSchema.methods.matchPassword = function matchPassword(enteredPassword) {
@@ -56,4 +54,3 @@ userSchema.methods.matchPassword = function matchPassword(enteredPassword) {
 };
 
 module.exports = mongoose.model("User", userSchema);
-
