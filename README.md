@@ -70,8 +70,8 @@ Build Command: npm run build
 Output Directory: dist
 ```
 
-Set `VITE_API_URL` in Vercel to your Render API URL plus `/api`, for example:
+Set `VITE_API_URL` in Vercel to your Render API URL plus `/api`:
 
 ```text
-VITE_API_URL=https://shopez-api.onrender.com/api
+VITE_API_URL=https://shopez-pwcw.onrender.com/api
 ```
