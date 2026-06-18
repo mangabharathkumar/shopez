@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "ShopEZ MERN e-commerce API",
   "main": "index.js",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",

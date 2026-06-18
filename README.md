@@ -48,3 +48,30 @@ Backend URL: `http://localhost:8000`
 - Checkout with shipping address and payment method
 - Order confirmation and profile order history
 - Admin dashboard with stats, users, orders, banner settings, and new product form
+
+## Free Deployment
+
+Backend on Render:
+
+```text
+Root Directory: Server
+Build Command: npm install
+Start Command: npm start
+```
+
+The root `render.yaml` can be used as a Render Blueprint. Free demo deployment can use the in-memory store. For persistent orders/users/products, add a MongoDB Atlas connection string as `MONGO_URI` in Render.
+
+Frontend on Vercel:
+
+```text
+Root Directory: Client
+Framework Preset: Vite
+Build Command: npm run build
+Output Directory: dist
+```
+
+Set `VITE_API_URL` in Vercel to your Render API URL plus `/api`, for example:
+
+```text
+VITE_API_URL=https://shopez-api.onrender.com/api
+```

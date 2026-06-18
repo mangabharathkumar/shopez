@@ -14,9 +14,29 @@ const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 
 const app = express();
 const port = process.env.PORT || 8000;
+const configuredOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+const allowVercelOrigins = process.env.ALLOW_VERCEL_ORIGINS !== "false";
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  origin(origin, callback) {
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+
+    const isConfiguredOrigin = configuredOrigins.includes(origin);
+    const isVercelPreview = allowVercelOrigins && /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin);
+
+    if (isConfiguredOrigin || isVercelPreview) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`CORS blocked origin: ${origin}`));
+  },
   credentials: true,
 }));
 app.use(express.json({ limit: "1mb" }));
